@@ -28,7 +28,31 @@ app.get('/blog', (req, res) => {
 app.get('/dash', (req, res) => {
     res.render('dash',{}); 
 });
+//for blog 
+app.get('/blog', async(req, res) => {
+    const token = req.cookies.token;
+    let f = 0;
+    let userData = null;
 
+    if (token) {
+        try {
+            const decoded = jwt.verify(token, jwtSecret);
+            const userId = decoded.userId;
+
+            userData = await User.findById(userId); 
+
+            f = 1;
+            // console.log(userData);
+
+        } catch (err) {
+            console.error("Invalid token", err.message);
+        }
+    }
+
+    const blogs = await Blog.find();
+    res.render("blog", {f, userData, blogs});
+
+})
 //for  signup
 
 
@@ -88,7 +112,7 @@ app.post('/logIn',  async (req, res) => {
     }
 
 
-    // Compare password
+ 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
        return res.status(401).render("messagePage", {
