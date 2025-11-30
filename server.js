@@ -53,6 +53,18 @@ app.get('/blog', async(req, res) => {
     res.render("blog", {f, userData, blogs});
 
 })
+
+app.get('/blogAdd', (req, res) => {
+    res.render("blogAdd", {}); 
+});
+
+app.get('/marketPlaceProductAdd', (req, res) => {
+    res.render("marketPlaceProductAdd", {}); 
+});
+
+app.get('/tutorialsAdd', (req, res) => {
+    res.render("tutorialsAdd", {}); 
+});
 //for  signup
 
 
