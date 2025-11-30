@@ -151,6 +151,50 @@ app.post('/logIn',  async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+//tutorials
+app.post('/tutorialsAdd',
+  upload.single('img'), async(req, res) => {
+     try {
+      const {
+        name,
+        title,
+        description,
+        duration,
+        attribute1,
+        attribute2, 
+        attribute3,
+        videoLink,
+      } = req.body;
+    
+        
+       const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
+      const user = await User.findById(req.user.userId);
+      console.log(imagePath);
+      const tutorial = new Tutorial({
+       name,
+        title,
+        description,
+        duration,
+        attribute1,
+        attribute2, 
+        attribute3,
+        author_name:user.name,
+        videoLink,
+        image: imagePath,
+      });
+      console.log(tutorial);
+       
+      const savedtutorial=await tutorial.save();
+      user.postedTutorials.push(savedtutorial._id);
+       await user.save()
+      console.log(user);
+      res.redirect('/tutorial');
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Failed to add tutorial');
+    }
+  
+})
 
 
 
