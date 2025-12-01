@@ -243,6 +243,57 @@ app.post('/logIn',  async (req, res) => {
 app.get('/privacyPolicy', (req, res) => {
     res.render("privacyPolicy", {});
 })
+//account :
+
+app.get('/myCart',authMiddleware, async (req, res) => {
+    const token = req.cookies.token;
+    let f = 0;
+    let userData = null;
+    try {
+            const decoded = jwt.verify(token, jwtSecret);
+            const userId = decoded.userId;
+            userData=await User.findById(userId);
+            const cart = userData.cart; 
+            f = 1;
+            if (!userData || !cart) return res.render({f, products: [],userData });
+
+              // Filter valid MongoDB ObjectId strings
+            const validCartIds = cart.filter(
+                  id => mongoose.Types.ObjectId.isValid(id)
+                );
+            const products = await Product.find({ _id: { $in: validCartIds } });//products which is added in card
+            res.render("myCart", {f,products,userData});
+
+        } catch (err) {
+            console.error("Invalid token", err.message);
+        }
+});
+app.get('/myProduct', authMiddleware, async (req, res) => {
+  let f = 0;
+
+  try {
+    const userData = await User.findById(req.user.userId); 
+    if (!userData || !userData.postedProducts) {
+      return res.render("myProduct", { f, products: [], userData });
+    }
+
+    const posted = userData.postedProducts;
+
+    const validPostedIds = posted.filter(
+      id => mongoose.Types.ObjectId.isValid(id)
+    );
+
+    const products = await Product.find({ _id: { $in: validPostedIds } });
+
+    f = 1;
+    return res.render("myProduct", { f, userData, products });
+
+  } catch (err) {
+    console.error("Error loading myProduct:", err.message);
+    return res.status(500).send("Internal Server Error");
+  }
+});
+
 
 app.get('/logOut', (req, res) => {
   res.clearCookie('token');
