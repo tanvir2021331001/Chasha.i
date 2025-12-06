@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function () {
     // API Key is now handled on the backend for security
     const API_URL = '/api/chat-ai';
