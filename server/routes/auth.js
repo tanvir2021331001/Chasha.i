@@ -6,10 +6,14 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.JWT_SECRET;
 const bcrypt =require('bcrypt')
+const fs = require('fs');
+const path = require('path');
+
 // if loged in it says already logged in 
 const ensureNotLogedIn=require('../middleware/ensureNotLogedIn');
 const upload=require('../middleware/upload');
 const cloudinary=require('../config/cloudinary');
+
 
 const User = require('../models/User');
 
@@ -68,6 +72,7 @@ router.post('/signUp',upload.single('img'), async(req, res) => {
     const {email, password,name } = req.body;
        const result = await cloudinary.uploader.upload(req.file.path);
     // Check if user already exists
+    fs.unlinkSync(req.file.path);
     const existingUser = await User.findOne({ email });
     if (existingUser) {
        return res.status(401).render("messagePage", {
