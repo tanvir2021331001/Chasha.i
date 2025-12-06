@@ -14,10 +14,13 @@
     --border-color: #e5e7eb;
 
     --brand-green: #16a34a;
+    --brand-red: #dc2626;
     --brand-green-hover: #15803d;
+    --brand-red-hover: #830606;
     --brand-green-light: #dcfce7;
 
     --brand-green-text: #166534;
+
 
 
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);

@@ -76,6 +76,9 @@ function renderTutorials(TutorialsToRender) {
                     <span class="tag">${tutorial.attribute3}</span>
                 </div>
                 <a href="${tutorial.videoLink}" class="tutorial-button">Watch Tutorial</a>
+                <button class="add-to-cart-btn" onclick="deleteProduct('${tutorial._id}')">
+                    Delete
+                </button>
             </div>
         </div>
     `).join('');
