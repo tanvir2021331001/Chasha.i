@@ -3,10 +3,13 @@ const router = express.Router();
 require("dotenv").config();
 const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.JWT_SECRET;
+const fs = require('fs');
+const path = require('path');
 
 const auth=require('../middleware/auth');
 const upload=require('../middleware/upload');
 const cloudinary=require('../config/cloudinary');
+
 
 const User = require('../models/User');
 const Tutorial=require('../models/Tutorial')
@@ -60,6 +63,7 @@ router.post('/tutorialsAdd',auth,
       } = req.body;
     
       const result = await cloudinary.uploader.upload(req.file.path);
+      fs.unlinkSync(req.file.path);
       const user = await User.findById(req.user.userId);
       const tutorial = new Tutorial({
        name,

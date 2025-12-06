@@ -4,6 +4,8 @@ require("dotenv").config();
 const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.JWT_SECRET;
 const cloudinary=require('../config/cloudinary');
+const fs = require('fs');
+const path = require('path');
 
 const auth=require('../middleware/auth');
 const upload=require('../middleware/upload');
@@ -33,6 +35,7 @@ router.get('/marketPlaceProductAdd',auth, (req, res) => {
       } = req.body;
     
        const result = await cloudinary.uploader.upload(req.file.path);
+       fs.unlinkSync(req.file.path);
       const product = new Product({
         name,
         type,
@@ -44,7 +47,7 @@ router.get('/marketPlaceProductAdd',auth, (req, res) => {
         description,
         image: result.secure_url,
       });
-      console.log(product);
+      // console.log(product);
       const savedproduct=await product.save();
       user.postedProducts.push(savedproduct._id);
        await user.save();
