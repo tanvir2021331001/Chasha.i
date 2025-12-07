@@ -5,10 +5,10 @@ function renderProduct(productToRender) {
 
     grid.innerHTML = `
         <div class="card">
-            <img src="${blog.image}" alt="Card Image" class="card-img">
-            <h1 class="card-title">${blog.title}</h1>
+            <img src="${productToRender.image}" alt="Card Image" class="card-img">
+            <h1 class="card-title">${productToRender.title}</h1>
             <p class="card-desc">
-                ${blog.description}
+                ${productToRender.description}
             </p>
         </div>
     `
