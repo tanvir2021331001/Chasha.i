@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centered Card</title>
+    <link rel="stylesheet" href="/css/blogDetail.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a class="logo">
+                    <span class="logo-text">Chasha.i</span>
+                </a>
+                <div class="nav-links">
+                    <!-- href thakle mouse pointer hoi -->
+                    <a href="/home" style="font-weight: bold; color: #16a34a;">Home</a>
+                    <a href="/marketPlace">Marketplace</a>
+                    <a href="/tutorial">Tutorials</a>
+                    <a href="/weather">Weather</a>
+                    <a href="/blog">Blog</a>
+                    <a href="/agridoc">AgriDoctor</a>
+                </div>
+                <div class="nav-buttons">
+                    <%- include("layout/loginOutUser") %>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <div id="bodyCard" class="bodyCard"></div>
+    <script>
+        const product = <%- JSON.stringify(product) %>;
+    </script>
+    <script src="/js/productDetail.js"></script>
+    <%- include("layout/footer") %>
+</body>
+
+</html>
