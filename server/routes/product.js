@@ -93,6 +93,32 @@ router.delete('/deleteProduct/:id', auth, async (req, res) => {
   }
 });
 
+router.get('/productDetail/:id', async(req, res) => {
+    const token = req.cookies.token;
+    let f=0;
+    if(token){f=1;}
+    const productId = req.params.id;
+    const product = await Product.findById(productId);
+    if(token){
+       const decoded = jwt.verify(token, jwtSecret);
+    const userId = decoded.userId;
+     
+    const userData = await User.findById(userId); 
+    
+    
+     return res.render("productDetail", {product,userData, f});
+    }
+    else{
+      const userData=null;
+      return res.render("productDetail", {product,userData, f});
+    }
+    
+    // console.log(product.title);
+    // console.log(product);
+
+   
+})
+
 
 
 module.exports=router;
