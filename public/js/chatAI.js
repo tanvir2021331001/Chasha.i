@@ -54,11 +54,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (data.error) {
                 addMessage("Error: " + data.error.message, 'bot');
-            } else if (data.choices && data.choices[0] && data.choices[0].message) {
-                const botReply = data.choices[0].message.content;
-                addMessage(botReply, 'bot');
-            } else {
-                addMessage("Error: Unexpected response format", 'bot');
+            } 
+            else if(data.generatedDescription){
+                addMessage(data.generatedDescription, 'bot');
+            }
+            // else if (data.choices && data.choices[0] && data.choices[0].message) {
+            //     const botReply = data.choices[0].message.content;
+            //     addMessage(botReply, 'bot');
+            // } 
+            else {
+                addMessage("give me a different question", 'bot');
                 console.error("Unexpected response:", data);
             }
 

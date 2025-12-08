@@ -2,11 +2,11 @@ function renderProduct(productToRender) {
     const grid = document.getElementById('bodyCard');
 
     grid.style.display = 'grid';
-
+    
     grid.innerHTML = `
         <div class="card">
             <img src="${productToRender.image}" alt="Card Image" class="card-img">
-            <h1 class="card-title">${productToRender.title}</h1>
+            <h1 class="card-title">${productToRender.name}</h1>
             <p class="card-desc">
                 ${productToRender.description}
             </p>
